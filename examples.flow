@@ -1,0 +1,76 @@
+# To test any of these, just copy one block 
+# and paste it into 'test.flow' to see how the compiler handles it!
+
+# ------------------------------------------
+# THE ULTIMATE EXAMPLE (All Features Combined)
+# ------------------------------------------
+# This script has no errors and is perfect for showing off!
+# It perfectly demonstrates:
+# 1. Case Insensitivity (sEt, fOr, bEgIn)
+# 2. Constant Folding (10 * 5 squashes to 50)
+# 3. Dead-Copy Elimination (t1 disappears completely)
+# 4. TAC Loop Flattening (The FOR loop flattens to JZ/GOTO)
+# 5. Semantic Type Inference (Symbol table detects 'int' and 'string')
+
+sEt baseScore tO 10 * 5
+SET total TO baseScore
+
+fOr i fRoM 1 tO 3 Do bEgIn
+    SET total TO total + 10
+eNd
+
+IF total > 40 tHeN BeGiN
+    priNT "The final optimized score is:"
+    pRiNt total
+EnD
+
+# ------------------------------------------
+# 1. THE OPTIMIZER (Constant Folding)
+# ------------------------------------------
+# The compiler will calculate "10 * 5" during Phase 5 (Optimized TAC)
+# so the final Assembly code will just say: LOAD 50.
+SET score TO 10 * 5
+PRINT score
+
+# ------------------------------------------
+# 2. THE OPTIMIZER (Dead-Copy Elimination)
+# ------------------------------------------
+# When doing math, Phase 4 generates messy middle-men (e.g. t1 = 50 + 50, health = t1).
+# Phase 5 folds the math (t1 = 100) and then eliminates the dead copy (health = 100)!
+SET health TO 50 + 50
+PRINT health
+
+# ------------------------------------------
+# 3. SYNTAX ERROR (Phase 2 - Parser Error)
+# ------------------------------------------
+# Uncomment the line below to crash the Parser! 
+# We forgot the "TO" keyword. The parser will yell: "Expected 'TO' but got '99'"
+# SET errorVar 99
+
+# ------------------------------------------
+# 4. SEMANTIC ERROR (Phase 3 - Logic Error)
+# ------------------------------------------
+# Uncomment the line below to crash the Semantic Analyzer!
+# We are trying to print a variable that hasn't been assigned yet.
+# It will say "Variable 'missingVar' used before assignment"
+# PRINT missingVar
+
+# ------------------------------------------
+# 5. FLATTENING LOOPS (Phase 4 - TAC Generation)
+# ------------------------------------------
+# This shows off how beautifully the compiler flattens a nested loop
+# into linear GOTO jumps. Look at the Phase 4 output for this!
+SET total TO 0
+FOR i FROM 1 TO 3 DO BEGIN
+    SET total TO total + i
+END
+PRINT "Total is: " + total
+
+# ------------------------------------------
+# 6. CASE INSENSITIVE LEXER (Phase 1)
+# ------------------------------------------
+# The Lexer allows any capitalization for keywords, but variables are strict!
+sEt myVar to 10
+If myVar == 10 tHeN BeGiN
+    priNT "Case Insensitivity works!"
+EnD

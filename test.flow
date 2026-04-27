@@ -1,0 +1,11 @@
+sEt baseScore tO 10 * 5
+SET total TO baseScore
+
+fOr i fRoM 1 tO 3 Do bEgIn
+    SET total TO total + 10
+eNd
+
+IF total > 40 tHeN BeGiN
+    priNT "The final optimized score is:"
+    pRiNt total
+EnD
